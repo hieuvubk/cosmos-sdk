@@ -273,6 +273,8 @@ func (svd SigVerificationDecorator) AnteHandle(ctx sdk.Context, tx sdk.Tx, simul
 		return ctx, errorsmod.Wrapf(sdkerrors.ErrUnauthorized, "invalid number of signer;  expected: %d, got %d", len(signers), len(sigs))
 	}
 
+	fmt.Println("tx", tx.GetMsgs())
+
 	for i, sig := range sigs {
 		acc, err := GetSignerAcc(ctx, svd.ak, signers[i])
 		if err != nil {
@@ -377,6 +379,7 @@ func (isd IncrementSequenceDecorator) AnteHandle(ctx sdk.Context, tx sdk.Tx, sim
 
 	for _, signer := range signers {
 		acc := isd.ak.GetAccount(ctx, signer)
+		fmt.Println("IncrementSequenceDecorator", acc.GetSequence())
 		if err := acc.SetSequence(acc.GetSequence() + 1); err != nil {
 			panic(err)
 		}
