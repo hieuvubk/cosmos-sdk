@@ -753,6 +753,7 @@ func (app *BaseApp) beginBlock(_ *abci.RequestFinalizeBlock) (sdk.BeginBlock, er
 }
 
 func (app *BaseApp) deliverTx(tx []byte) *abci.ExecTxResult {
+	fmt.Println("deliverTx tx")
 	gInfo := sdk.GasInfo{}
 	resultStr := "successful"
 
@@ -766,6 +767,7 @@ func (app *BaseApp) deliverTx(tx []byte) *abci.ExecTxResult {
 	}()
 
 	gInfo, result, anteEvents, err := app.runTx(execModeFinalize, tx)
+	fmt.Print("runTx", gInfo, result, anteEvents, err)
 	if err != nil {
 		resultStr = "failed"
 		resp = sdkerrors.ResponseExecTxResultWithEvents(
