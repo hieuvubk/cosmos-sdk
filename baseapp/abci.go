@@ -787,9 +787,11 @@ func (app *BaseApp) internalFinalizeBlock(ctx context.Context, req *abci.Request
 	// NOTE: Not all raw transactions may adhere to the sdk.Tx interface, e.g.
 	// vote extensions, so skip those.
 	txResults := make([]*abci.ExecTxResult, 0, len(req.Txs))
+	fmt.Println("FinalizeBlock", len(req.Txs))
 	for _, rawTx := range req.Txs {
 		var response *abci.ExecTxResult
 
+		fmt.Println("FinalizeBlock tx")
 		if _, err := app.txDecoder(rawTx); err == nil {
 			response = app.deliverTx(rawTx)
 		} else {
