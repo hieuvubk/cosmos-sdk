@@ -955,8 +955,10 @@ func (app *BaseApp) runTx(mode execMode, txBytes []byte) (gInfo sdk.GasInfo, res
 	// and we're in DeliverTx. Note, runMsgs will never return a reference to a
 	// Result if any single message fails or does not have a registered Handler.
 	msgsV2, err := tx.GetMsgsV2()
+	fmt.Println("msgsV2", msgsV2)
 	if err == nil {
 		result, err = app.runMsgs(runMsgCtx, msgs, msgsV2, mode)
+		fmt.Println("runMsgs", result, err)
 	}
 
 	// Run optional postHandlers (should run regardless of the execution result).
