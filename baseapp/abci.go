@@ -349,18 +349,21 @@ func (app *BaseApp) CheckTx(req *abci.RequestCheckTx) (*abci.ResponseCheckTx, er
 	}
 
 	gInfo, result, anteEvents, err := app.runTx(mode, req.Tx)
-	fmt.Println("CheckTx res", gInfo, result, anteEvents, err)
 	if err != nil {
 		return sdkerrors.ResponseCheckTxWithEvents(err, gInfo.GasWanted, gInfo.GasUsed, anteEvents, app.trace), nil
 	}
 
-	return &abci.ResponseCheckTx{
+	res := &abci.ResponseCheckTx{
 		GasWanted: int64(gInfo.GasWanted), // TODO: Should type accept unsigned ints?
 		GasUsed:   int64(gInfo.GasUsed),   // TODO: Should type accept unsigned ints?
 		Log:       result.Log,
 		Data:      result.Data,
 		Events:    sdk.MarkEventsToIndex(result.Events, app.indexEvents),
-	}, nil
+	}
+
+	fmt.Println("CheckTx res", res)
+
+	return res, nil
 }
 
 // PrepareProposal implements the PrepareProposal ABCI method and returns a
