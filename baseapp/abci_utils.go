@@ -270,6 +270,8 @@ func (h *DefaultProposalHandler) PrepareProposalHandler() sdk.PrepareProposalHan
 					return nil, err
 				}
 
+				fmt.Println("NoOp Mempool", tx, err)
+
 				stop := h.txSelector.SelectTxForProposal(ctx, uint64(req.MaxTxBytes), maxBlockGas, tx, txBz)
 				if stop {
 					break
