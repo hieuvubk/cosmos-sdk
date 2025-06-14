@@ -269,6 +269,8 @@ func Sign(ctx context.Context, txf Factory, name string, txBuilder client.TxBuil
 	}
 
 	pubKey, err := k.GetPubKey()
+	fmt.Println("Sign Pubkey", pubKey, err)
+	fmt.Println("sequence", txf.sequence)
 	if err != nil {
 		return err
 	}

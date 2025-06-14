@@ -44,6 +44,7 @@ func SignTx(txFactory tx.Factory, clientCtx client.Context, name string, txBuild
 	}
 
 	pubKey, err := k.GetPubKey()
+	fmt.Println("Pubkey sign", pubKey, err)
 	if err != nil {
 		return err
 	}
