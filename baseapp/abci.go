@@ -349,6 +349,7 @@ func (app *BaseApp) CheckTx(req *abci.RequestCheckTx) (*abci.ResponseCheckTx, er
 	}
 
 	gInfo, result, anteEvents, err := app.runTx(mode, req.Tx)
+	fmt.Println("CheckTx res", gInfo, result, anteEvents, err)
 	if err != nil {
 		return sdkerrors.ResponseCheckTxWithEvents(err, gInfo.GasWanted, gInfo.GasUsed, anteEvents, app.trace), nil
 	}
